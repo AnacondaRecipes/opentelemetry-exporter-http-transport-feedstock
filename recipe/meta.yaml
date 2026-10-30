@@ -1,0 +1,60 @@
+{% set name = "opentelemetry-exporter-http-transport" %}
+{% set version = "0.66b1" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/o/opentelemetry-exporter-http-transport/opentelemetry_exporter_http_transport-{{ version }}.tar.gz
+  sha256: 443080203bf52586ce0b2ad901e8951c61833eab1aa539ae6f1f16fe9e8e7952
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: true  # [py<310]
+
+requirements:
+  host:
+    - python
+    - pip
+    - hatchling
+  run:
+    - python
+    - opentelemetry-api >=1.15,<2
+  run_constrained:
+    - urllib3 >=1.26
+    - requests >=2.25,<3
+
+# E   ModuleNotFoundError: No module named 'mocket'
+{% set ignored_tests = " --ignore=tests/test_requests_transport.py" %}
+{% set ignored_tests = ignored_tests + " --ignore=tests/test_urllib3_transport.py" %}
+
+test:
+  source_files:
+    - tests
+  imports:
+    - opentelemetry.exporter.http.transport
+  commands:
+    - pip check
+    - pytest -vv tests {{ ignored_tests }}
+  requires:
+    - pip
+    - pytest
+    - urllib3
+    - requests
+
+about:
+  home: https://github.com/open-telemetry/opentelemetry-python/tree/main/exporter/opentelemetry-exporter-http-transport
+  license: Apache-2.0
+  license_family: Apache
+  license_file: LICENSE
+  summary: OpenTelemetry Exporters HTTP transport
+  description: |
+    This package provides shared HTTP transport abstractions used by OpenTelemetry exporters.
+  doc_url: https://github.com/open-telemetry/opentelemetry-python/tree/main/exporter/opentelemetry-exporter-http-transport
+  dev_url: https://github.com/open-telemetry/opentelemetry-python/tree/main/exporter/opentelemetry-exporter-http-transport
+
+extra:
+  recipe-maintainers:
+    - xhochy
