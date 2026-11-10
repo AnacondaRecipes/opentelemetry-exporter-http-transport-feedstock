@@ -1,5 +1,5 @@
 {% set name = "opentelemetry-exporter-http-transport" %}
-{% set version = "0.66b1" %}
+{% set version = "0.66b2" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/o/opentelemetry-exporter-http-transport/opentelemetry_exporter_http_transport-{{ version }}.tar.gz
-  sha256: 443080203bf52586ce0b2ad901e8951c61833eab1aa539ae6f1f16fe9e8e7952
+  sha256: 66d6ed810a515432c8891da9a834464332fd70badeca45bdeeae81b4280c903b
 
 build:
   number: 0
